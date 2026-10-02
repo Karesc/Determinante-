@@ -306,3 +306,57 @@ footer {
     min-height: 65vh;
   }
 }
+
+/* =========================================================
+   DETERMINANTE 3x3 Y VOLUMEN
+   ========================================================= */
+
+.volume-section {
+  border-top: 1px solid var(--border);
+}
+
+.volume-intro {
+  max-width: 850px;
+}
+
+.volume-layout {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 25px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+.volume-controls {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 25px;
+}
+
+.plot3d-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  min-width: 0;
+}
+
+#plot3d {
+  width: 100%;
+  height: 650px;
+}
+
+@media (max-width: 800px) {
+
+  .volume-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #plot3d {
+    height: 500px;
+  }
+
+}
