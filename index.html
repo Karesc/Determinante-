@@ -14,6 +14,8 @@
     };
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <!-- Plotly para la visualización 3D -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 
 <body>
@@ -233,6 +235,175 @@
     </p>
   </section>
 </main>
+
+<section id="volumen3d" class="volume-section">
+  <div class="section-label">03 · DETERMINANTE 3×3</div>
+
+  <h2>Del área al volumen</h2>
+
+  <p class="section-description">
+    En tres dimensiones, tres vectores generan un paralelepípedo.
+    Su volumen está determinado por el valor absoluto del determinante.
+  </p>
+
+  <div class="volume-intro">
+    <div>
+      <p>
+        Consideremos la matriz
+      </p>
+
+      <div class="formula">
+        \[
+        A=
+        \begin{pmatrix}
+        a&b&c\\
+        d&e&f\\
+        g&h&i
+        \end{pmatrix}
+        \]
+      </div>
+
+      <p>
+        Sus columnas pueden interpretarse como tres vectores:
+      </p>
+
+      <div class="formula">
+        \[
+        \vec u=(a,d,g),\qquad
+        \vec v=(b,e,h),\qquad
+        \vec w=(c,f,i).
+        \]
+      </div>
+
+      <p>
+        Estos tres vectores forman un paralelepípedo cuyo volumen es
+      </p>
+
+      <div class="formula big highlight">
+        \[
+        \boxed{V=|\det(A)|}
+        \]
+      </div>
+    </div>
+  </div>
+
+  <div class="volume-layout">
+
+    <div class="volume-controls">
+
+      <div class="control-group">
+        <h3>\(\vec u=(a,d,g)\)</h3>
+
+        <label>
+          <span>a = <strong id="a3Value">1</strong></span>
+          <input id="a3" type="range" min="-3" max="3"
+                 step="0.1" value="1">
+        </label>
+
+        <label>
+          <span>d = <strong id="d3Value">0</strong></span>
+          <input id="d3" type="range" min="-3" max="3"
+                 step="0.1" value="0">
+        </label>
+
+        <label>
+          <span>g = <strong id="g3Value">0</strong></span>
+          <input id="g3" type="range" min="-3" max="3"
+                 step="0.1" value="0">
+        </label>
+      </div>
+
+      <div class="control-group">
+        <h3>\(\vec v=(b,e,h)\)</h3>
+
+        <label>
+          <span>b = <strong id="b3Value">0</strong></span>
+          <input id="b3" type="range" min="-3" max="3"
+                 step="0.1" value="0">
+        </label>
+
+        <label>
+          <span>e = <strong id="e3Value">1</strong></span>
+          <input id="e3" type="range" min="-3" max="3"
+                 step="0.1" value="1">
+        </label>
+
+        <label>
+          <span>h = <strong id="h3Value">0</strong></span>
+          <input id="h3" type="range" min="-3" max="3"
+                 step="0.1" value="0">
+        </label>
+      </div>
+
+      <div class="control-group">
+        <h3>\(\vec w=(c,f,i)\)</h3>
+
+        <label>
+          <span>c = <strong id="c3Value">0</strong></span>
+          <input id="c3" type="range" min="-3" max="3"
+                 step="0.1" value="0">
+        </label>
+
+        <label>
+          <span>f = <strong id="f3Value">0</strong></span>
+          <input id="f3" type="range" min="-3" max="3"
+                 step="0.1" value="0">
+        </label>
+
+        <label>
+          <span>i = <strong id="i3Value">1</strong></span>
+          <input id="i3" type="range" min="-3" max="3"
+                 step="0.1" value="1">
+        </label>
+      </div>
+
+      <button id="reset3D" class="reset-button">
+        Restablecer
+      </button>
+
+      <div class="result-card">
+
+        <div class="matrix">
+          \[
+          A=
+          \begin{pmatrix}
+          <span id="a3m">1</span>&<span id="b3m">0</span>&<span id="c3m">0</span>\\
+          <span id="d3m">0</span>&<span id="e3m">1</span>&<span id="f3m">0</span>\\
+          <span id="g3m">0</span>&<span id="h3m">0</span>&<span id="i3m">1</span>
+          \end{pmatrix}
+          \]
+        </div>
+
+        <div class="calculation">
+          \[
+          \det(A)=
+          <strong id="det3Value">1</strong>
+          \]
+        </div>
+
+        <div class="area-result">
+          <span>Volumen del paralelepípedo</span>
+          <strong id="volume3Value">1</strong>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="plot3d-card">
+      <div id="plot3d"></div>
+    </div>
+
+  </div>
+
+  <div class="formula big">
+    \[
+    \boxed{
+    \text{Volumen}=|\det(A)|
+    }
+    \]
+  </div>
+
+</section>
 
 <footer>
   <p>Álgebra Lineal · Visualización interactiva</p>
