@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El determinante como área</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- MathJax para mostrar fórmulas LaTeX -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body>
+<header class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">ÁLGEBRA LINEAL · VISUALIZACIÓN</p>
+    <h1>El determinante como área</h1>
+    <p class="subtitle">
+      Una interpretación geométrica del determinante de una matriz \(2\times2\).
+    </p>
+    <a href="#explorador" class="button">Explorar la animación ↓</a>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div class="section-label">01 · IDEA GEOMÉTRICA</div>
+    <h2>¿Qué mide un determinante?</h2>
+
+    <div class="two-columns">
+      <div>
+        <p>
+          Consideremos dos vectores del plano:
+        </p>
+
+        <div class="formula">
+          \[
+          \vec u=(a,c), \qquad \vec v=(b,d)
+          \]
+        </div>
+
+        <p>
+          Estos dos vectores pueden formar un paralelogramo. Su área está
+          relacionada directamente con el determinante de la matriz
+        </p>
+
+        <div class="formula">
+          \[
+          A=
+          \begin{pmatrix}
+          a & b\\
+          c & d
+          \end{pmatrix}.
+          \]
+        </div>
+
+        <p>
+          El determinante es
+        </p>
+
+        <div class="formula highlight">
+          \[
+          \det(A)=ad-bc.
+          \]
+        </div>
+
+        <p>
+          Y, geométricamente,
+        </p>
+
+        <div class="formula big">
+          \[
+          \boxed{\text{Área}=|\det(A)|}
+          \]
+        </div>
+      </div>
+
+      <div class="concept-card">
+        <h3>La idea visual</h3>
+        <p>
+          Partimos de los vectores \(\vec u\) y \(\vec v\). Al mover sus
+          extremos, cambia el paralelogramo y cambia su área.
+        </p>
+        <p>
+          Los sliders de abajo permiten observar esta relación en tiempo real.
+        </p>
+
+        <div class="mini-equation">
+          \[
+          |\det(A)|=|\vec u_x\vec v_y-\vec v_x\vec u_y|
+          \]
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="explorador" class="explorer">
+    <div class="section-label">02 · EXPLORADOR INTERACTIVO</div>
+    <h2>Mueve los vectores</h2>
+    <p class="section-description">
+      Cambia las coordenadas y observa cómo se transforma el paralelogramo.
+    </p>
+
+    <div class="interactive-layout">
+      <div class="controls">
+        <div class="control-group">
+          <h3>\(\vec u=(a,c)\)</h3>
+
+          <label>
+            <span>a = <strong id="aValue">3</strong></span>
+            <input id="a" type="range" min="-5" max="5" step="0.1" value="3">
+          </label>
+
+          <label>
+            <span>c = <strong id="cValue">1</strong></span>
+            <input id="c" type="range" min="-5" max="5" step="0.1" value="1">
+          </label>
+        </div>
+
+        <div class="control-group">
+          <h3>\(\vec v=(b,d)\)</h3>
+
+          <label>
+            <span>b = <strong id="bValue">1</strong></span>
+            <input id="b" type="range" min="-5" max="5" step="0.1" value="1">
+          </label>
+
+          <label>
+            <span>d = <strong id="dValue">3</strong></span>
+            <input id="d" type="range" min="-5" max="5" step="0.1" value="3">
+          </label>
+        </div>
+
+        <button id="reset" class="reset-button">Restablecer</button>
+
+        <div class="result-card">
+          <div class="matrix">
+            \[
+            A=
+            \begin{pmatrix}
+            <span id="ma">3</span> & <span id="mb">1</span>\\
+            <span id="mc">1</span> & <span id="md">3</span>
+            \end{pmatrix}
+            \]
+          </div>
+
+          <div class="calculation">
+            \[
+            \det(A)
+            =
+            (<span id="ca">3</span>)(<span id="cd">3</span>)
+            -
+            (<span id="cb">1</span>)(<span id="cc">1</span>)
+            =
+            <strong id="detValue">8</strong>
+            \]
+          </div>
+
+          <div class="area-result">
+            <span>Área del paralelogramo</span>
+            <strong id="areaValue">8</strong>
+          </div>
+
+          <div id="orientation" class="orientation positive">
+            Orientación positiva
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas-card">
+        <canvas id="canvas" width="700" height="600"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="explanation">
+    <div class="section-label">03 · ¿POR QUÉ FUNCIONA?</div>
+    <h2>De la fórmula a la geometría</h2>
+
+    <div class="steps">
+      <article>
+        <span class="number">1</span>
+        <h3>Dos vectores</h3>
+        <p>
+          Los vectores \(\vec u\) y \(\vec v\) determinan dos lados del
+          paralelogramo.
+        </p>
+      </article>
+
+      <article>
+        <span class="number">2</span>
+        <h3>La base y la altura</h3>
+        <p>
+          El área puede verse como base por altura. La expresión
+          \(ad-bc\) codifica exactamente esa información geométrica.
+        </p>
+      </article>
+
+      <article>
+        <span class="number">3</span>
+        <h3>El valor absoluto</h3>
+        <p>
+          El determinante puede ser negativo cuando cambia la orientación.
+          Por eso el área geométrica es \(|\det(A)|\).
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="orientation-section">
+    <div class="section-label">04 · ALGO MÁS QUE UN ÁREA</div>
+    <h2>El signo también contiene información</h2>
+    <p>
+      Si intercambiamos la posición de los vectores, la orientación cambia.
+      El área permanece igual, pero el determinante cambia de signo.
+    </p>
+
+    <div class="formula big">
+      \[
+      \det(\vec u,\vec v)=-\det(\vec v,\vec u)
+      \]
+    </div>
+
+    <p>
+      Así, el determinante no solamente mide un área: también distingue
+      entre las dos orientaciones posibles del par de vectores.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <p>Álgebra Lineal · Visualización interactiva</p>
+  <p>Construida con HTML, CSS, JavaScript y MathJax.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
