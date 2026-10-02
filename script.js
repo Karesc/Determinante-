@@ -232,3 +232,445 @@ document.getElementById("reset").addEventListener("click", () => {
 window.addEventListener("resize", update);
 
 update();
+
+/* =========================================================
+   DETERMINANTE 3x3 → VOLUMEN
+   ========================================================= */
+
+const sliders3D = {
+  a: document.getElementById("a3"),
+  b: document.getElementById("b3"),
+  c: document.getElementById("c3"),
+  d: document.getElementById("d3"),
+  e: document.getElementById("e3"),
+  f: document.getElementById("f3"),
+  g: document.getElementById("g3"),
+  h: document.getElementById("h3"),
+  i: document.getElementById("i3")
+};
+
+
+/* ---------------------------------------------------------
+   Obtener valores
+   --------------------------------------------------------- */
+
+function get3DData() {
+
+  return {
+    a: Number(sliders3D.a.value),
+    b: Number(sliders3D.b.value),
+    c: Number(sliders3D.c.value),
+
+    d: Number(sliders3D.d.value),
+    e: Number(sliders3D.e.value),
+    f: Number(sliders3D.f.value),
+
+    g: Number(sliders3D.g.value),
+    h: Number(sliders3D.h.value),
+    i: Number(sliders3D.i.value)
+  };
+
+}
+
+
+/* ---------------------------------------------------------
+   Determinante 3x3
+   --------------------------------------------------------- */
+
+function determinant3x3(A) {
+
+  return (
+    A.a * (A.e * A.i - A.f * A.h)
+    -
+    A.b * (A.d * A.i - A.f * A.g)
+    +
+    A.c * (A.d * A.h - A.e * A.g)
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   Actualizar números y matriz
+   --------------------------------------------------------- */
+
+function update3DText(A) {
+
+  const keys = [
+    "a", "b", "c",
+    "d", "e", "f",
+    "g", "h", "i"
+  ];
+
+  keys.forEach(key => {
+
+    const valueElement =
+      document.getElementById(key + "3Value");
+
+    if (valueElement) {
+      valueElement.textContent = fmt(A[key]);
+    }
+
+    const matrixElement =
+      document.getElementById(key + "3m");
+
+    if (matrixElement) {
+      matrixElement.textContent = fmt(A[key]);
+    }
+
+  });
+
+  const det = determinant3x3(A);
+  const volume = Math.abs(det);
+
+  document.getElementById("det3Value").textContent =
+    fmt(det);
+
+  document.getElementById("volume3Value").textContent =
+    fmt(volume);
+
+}
+
+
+/* ---------------------------------------------------------
+   Crear los vectores
+   --------------------------------------------------------- */
+
+function vectors3D(A) {
+
+  return {
+
+    u: [A.a, A.d, A.g],
+
+    v: [A.b, A.e, A.h],
+
+    w: [A.c, A.f, A.i]
+
+  };
+
+}
+
+
+/* ---------------------------------------------------------
+   Dibujar paralelepípedo
+   --------------------------------------------------------- */
+
+function draw3D(A) {
+
+  const vectors = vectors3D(A);
+
+  const u = vectors.u;
+  const v = vectors.v;
+  const w = vectors.w;
+
+  const O = [0, 0, 0];
+
+  const U = u;
+
+  const V = v;
+
+  const W = w;
+
+  const UV = [
+    u[0] + v[0],
+    u[1] + v[1],
+    u[2] + v[2]
+  ];
+
+  const UW = [
+    u[0] + w[0],
+    u[1] + w[1],
+    u[2] + w[2]
+  ];
+
+  const VW = [
+    v[0] + w[0],
+    v[1] + w[1],
+    v[2] + w[2]
+  ];
+
+  const UVW = [
+    u[0] + v[0] + w[0],
+    u[1] + v[1] + w[1],
+    u[2] + v[2] + w[2]
+  ];
+
+
+  /* -------------------------------------------------------
+     Vértices
+     ------------------------------------------------------- */
+
+  const vertices = [
+    O, U, V, W,
+    UV, UW, VW, UVW
+  ];
+
+
+  const x = vertices.map(p => p[0]);
+  const y = vertices.map(p => p[1]);
+  const z = vertices.map(p => p[2]);
+
+
+  /* -------------------------------------------------------
+     Caras trianguladas
+     ------------------------------------------------------- */
+
+  const i = [
+    0, 0,
+    0, 0,
+    1, 1,
+    2, 2,
+    3, 3,
+    4, 4
+  ];
+
+  const j = [
+    1, 2,
+    1, 3,
+    4, 5,
+    4, 6,
+    5, 6,
+    7, 7
+  ];
+
+  const k = [
+    4, 6,
+    5, 5,
+    7, 7,
+    7, 7,
+    7, 7,
+    6, 5
+  ];
+
+
+  /* -------------------------------------------------------
+     Paralelepípedo
+     ------------------------------------------------------- */
+
+  const box = {
+    type: "mesh3d",
+
+    x: x,
+    y: y,
+    z: z,
+
+    i: i,
+    j: j,
+    k: k,
+
+    opacity: 0.55,
+
+    flatshading: true,
+
+    hoverinfo: "skip"
+  };
+
+
+  /* -------------------------------------------------------
+     Vectores
+     ------------------------------------------------------- */
+
+  const vectorX = [
+    O[0], U[0], null,
+    O[0], V[0], null,
+    O[0], W[0]
+  ];
+
+  const vectorY = [
+    O[1], U[1], null,
+    O[1], V[1], null,
+    O[1], W[1]
+  ];
+
+  const vectorZ = [
+    O[2], U[2], null,
+    O[2], V[2], null,
+    O[2], W[2]
+  ];
+
+
+  const vectorsPlot = {
+
+    type: "scatter3d",
+
+    mode: "lines",
+
+    x: vectorX,
+
+    y: vectorY,
+
+    z: vectorZ,
+
+    line: {
+      width: 8
+    },
+
+    hoverinfo: "skip"
+  };
+
+
+  /* -------------------------------------------------------
+     Extremos y etiquetas
+     ------------------------------------------------------- */
+
+  const labels = {
+
+    type: "scatter3d",
+
+    mode: "text",
+
+    x: [
+      U[0],
+      V[0],
+      W[0]
+    ],
+
+    y: [
+      U[1],
+      V[1],
+      W[1]
+    ],
+
+    z: [
+      U[2],
+      V[2],
+      W[2]
+    ],
+
+    text: [
+      "u",
+      "v",
+      "w"
+    ],
+
+    textfont: {
+      size: 18
+    },
+
+    hoverinfo: "skip"
+  };
+
+
+  /* -------------------------------------------------------
+     Configuración
+     ------------------------------------------------------- */
+
+  const layout = {
+
+    margin: {
+      l: 0,
+      r: 0,
+      b: 0,
+      t: 20
+    },
+
+    scene: {
+
+      xaxis: {
+        title: "x",
+        range: [-4, 4]
+      },
+
+      yaxis: {
+        title: "y",
+        range: [-4, 4]
+      },
+
+      zaxis: {
+        title: "z",
+        range: [-4, 4]
+      },
+
+      aspectmode: "cube",
+
+      camera: {
+        eye: {
+          x: 1.5,
+          y: 1.5,
+          z: 1.3
+        }
+      }
+
+    },
+
+    showlegend: false
+  };
+
+
+  Plotly.react(
+    "plot3d",
+    [
+      box,
+      vectorsPlot,
+      labels
+    ],
+    layout,
+    {
+      responsive: true,
+      displaylogo: false
+    }
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   Actualizar todo
+   --------------------------------------------------------- */
+
+function update3D() {
+
+  const data = get3DData();
+
+  update3DText(data);
+
+  draw3D(data);
+
+}
+
+
+/* ---------------------------------------------------------
+   Sliders
+   --------------------------------------------------------- */
+
+Object.values(sliders3D).forEach(slider => {
+
+  slider.addEventListener(
+    "input",
+    update3D
+  );
+
+});
+
+
+/* ---------------------------------------------------------
+   Botón restablecer
+   --------------------------------------------------------- */
+
+document.getElementById("reset3D").addEventListener(
+  "click",
+  () => {
+
+    sliders3D.a.value = 1;
+    sliders3D.b.value = 0;
+    sliders3D.c.value = 0;
+
+    sliders3D.d.value = 0;
+    sliders3D.e.value = 1;
+    sliders3D.f.value = 0;
+
+    sliders3D.g.value = 0;
+    sliders3D.h.value = 0;
+    sliders3D.i.value = 1;
+
+    update3D();
+
+  }
+);
+
+
+/* ---------------------------------------------------------
+   Inicialización
+   --------------------------------------------------------- */
+
+update3D();
