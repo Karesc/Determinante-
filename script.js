@@ -73,26 +73,45 @@ function updateText(data) {
   }
 }
 
+
 function draw(data) {
   const W = canvas.width;
   const H = canvas.height;
 
+  const colors = {
+    background: "#FAFAF7",
+    grid: "#E8E8E2",
+    axis: "#92958F",
+    u: "#E07A5F",
+    v: "#3986A8",
+    area: "rgba(93, 155, 145, 0.17)",
+    border: "#5D9B91",
+    diagonal: "#A5AAA7",
+    text: "#343A40",
+    origin: "#343A40"
+  };
+
   ctx.clearRect(0, 0, W, H);
+
+  // Fondo
+  ctx.fillStyle = colors.background;
+  ctx.fillRect(0, 0, W, H);
 
   const centerX = W / 2;
   const centerY = H / 2;
   const scale = Math.min(W, H) / 13;
 
-  function X(x) { return centerX + x * scale; }
-  function Y(y) { return centerY - y * scale; }
+  function X(x) {
+    return centerX + x * scale;
+  }
 
-  // Fondo
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, W, H);
+  function Y(y) {
+    return centerY - y * scale;
+  }
 
   // Cuadrícula
   ctx.lineWidth = 1;
-  ctx.strokeStyle = "#eeeeee";
+  ctx.strokeStyle = colors.grid;
 
   for (let x = -6; x <= 6; x++) {
     ctx.beginPath();
@@ -108,9 +127,9 @@ function draw(data) {
     ctx.stroke();
   }
 
-  // Ejes
-  ctx.strokeStyle = "#777777";
-  ctx.lineWidth = 2;
+  // Ejes coordenados
+  ctx.strokeStyle = colors.axis;
+  ctx.lineWidth = 1.5;
 
   ctx.beginPath();
   ctx.moveTo(X(-6), Y(0));
@@ -122,13 +141,13 @@ function draw(data) {
   ctx.lineTo(X(0), Y(6));
   ctx.stroke();
 
-  // Puntos del paralelogramo
+  // Vectores y vértices
   const O = [0, 0];
   const U = [data.a, data.c];
   const V = [data.b, data.d];
   const UV = [data.a + data.b, data.c + data.d];
 
-  // Área
+  // Paralelogramo
   ctx.beginPath();
   ctx.moveTo(X(O[0]), Y(O[1]));
   ctx.lineTo(X(U[0]), Y(U[1]));
@@ -136,32 +155,37 @@ function draw(data) {
   ctx.lineTo(X(V[0]), Y(V[1]));
   ctx.closePath();
 
-  ctx.fillStyle = "rgba(49, 92, 140, 0.18)";
+  ctx.fillStyle = colors.area;
   ctx.fill();
 
-  ctx.strokeStyle = "#315c8c";
+  ctx.strokeStyle = colors.border;
   ctx.lineWidth = 2;
+  ctx.lineJoin = "round";
   ctx.stroke();
 
-  // Flecha
-  function arrow(from, to, label) {
+  // Flechas vectoriales
+  function arrow(from, to, label, color, offsetX = 10, offsetY = -10) {
     const x1 = X(from[0]);
     const y1 = Y(from[1]);
     const x2 = X(to[0]);
     const y2 = Y(to[1]);
 
-    ctx.strokeStyle = "#202124";
-    ctx.fillStyle = "#202124";
-    ctx.lineWidth = 4;
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const head = 12;
 
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    // Cuerpo de la flecha
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
 
-    const angle = Math.atan2(y2 - y1, x2 - x1);
-    const head = 12;
-
+    // Punta
     ctx.beginPath();
     ctx.moveTo(x2, y2);
     ctx.lineTo(
@@ -175,41 +199,61 @@ function draw(data) {
     ctx.closePath();
     ctx.fill();
 
-    ctx.font = "bold 20px Arial";
-    ctx.fillText(label, x2 + 10, y2 - 10);
+    // Etiqueta con fondo claro
+    ctx.font = "italic bold 20px Georgia";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+
+    const labelX = x2 + offsetX;
+    const labelY = y2 + offsetY;
+
+    ctx.fillStyle = colors.background;
+    ctx.fillRect(labelX - 3, labelY - 12, 22, 24);
+
+    ctx.fillStyle = color;
+    ctx.fillText(label, labelX, labelY);
   }
 
-  arrow(O, U, "u");
-  arrow(O, V, "v");
+  arrow(O, U, "u", colors.u);
+  arrow(O, V, "v", colors.v);
 
-  // Vector diagonal
-  ctx.setLineDash([7, 7]);
-  ctx.strokeStyle = "#999999";
-  ctx.lineWidth = 2;
+  // Lados trasladados: líneas discontinuas
+  ctx.save();
+  ctx.setLineDash([6, 6]);
+  ctx.strokeStyle = colors.diagonal;
+  ctx.lineWidth = 1.5;
+
   ctx.beginPath();
   ctx.moveTo(X(U[0]), Y(U[1]));
   ctx.lineTo(X(UV[0]), Y(UV[1]));
-  ctx.stroke();
-
-  ctx.beginPath();
   ctx.moveTo(X(V[0]), Y(V[1]));
   ctx.lineTo(X(UV[0]), Y(UV[1]));
   ctx.stroke();
-  ctx.setLineDash([]);
+  ctx.restore();
 
-  // Texto del área
-  const det = data.a * data.d - data.b * data.c;
-  const area = Math.abs(det);
-
-  ctx.fillStyle = "#202124";
-  ctx.font = "bold 18px Arial";
-  ctx.fillText(`|det(A)| = ${fmt(area)}`, 20, 35);
+  // Vértice opuesto
+  ctx.beginPath();
+  ctx.arc(X(UV[0]), Y(UV[1]), 4, 0, Math.PI * 2);
+  ctx.fillStyle = colors.border;
+  ctx.fill();
 
   // Origen
   ctx.beginPath();
-  ctx.arc(X(0), Y(0), 5, 0, Math.PI * 2);
+  ctx.arc(X(0), Y(0), 4, 0, Math.PI * 2);
+  ctx.fillStyle = colors.origin;
   ctx.fill();
+
+  // Indicador del área
+  const det = data.a * data.d - data.b * data.c;
+  const area = Math.abs(det);
+
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+  ctx.font = "600 17px Arial, sans-serif";
+  ctx.fillStyle = colors.text;
+  ctx.fillText(`Área = ${fmt(area)}`, 22, 32);
 }
+
 
 function update() {
   const data = getData();
