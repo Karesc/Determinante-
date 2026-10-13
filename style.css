@@ -223,6 +223,20 @@ input[type="range"] {
   font-size: 2rem;
 }
 
+.matrix table {
+  display: inline-table;
+  border-left: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  border-collapse: separate;
+  border-spacing: 12px 6px;
+}
+
+.matrix td {
+  text-align: center;
+  min-width: 20px;
+  font-size: 1.2rem;
+}
+
 .orientation {
   margin-top: 12px;
   padding: 8px;
