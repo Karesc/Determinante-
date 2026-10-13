@@ -158,14 +158,21 @@
         <button id="reset" class="reset-button">Restablecer</button>
 
         <div class="result-card">
-          <div class="formula">
-            \[
-            A = \begin{pmatrix} <span id="ca">3</span> & <span id="cb">1</span> \\ <span id="cc">1</span> & <span id="cd">1</span> \end{pmatrix} 
-            \]
+          <div class="matrix">
+            <p>det(A) =</p>
+            <table>
+              <tr>
+                <td id="ma">3</td>
+                <td id="mb">1</td>
+              </tr>
+              <tr>
+                <td id="mc">1</td>
+                <td id="md">3</td>
+              </tr>
+            </table>
           </div>
 
           <div class="calculation">
-            det(A)
             =
             (<span id="ca">3</span>)(<span id="cd">3</span>)
             -
