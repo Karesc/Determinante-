@@ -31,21 +31,33 @@
 </header>
 
 <main>
-  <section class="intro1">
-    <div class="section-label">01 · INTRODUCCIÓN</div>
-    <p> El determinante de una matriz es mucho más que una fórmula algebraica con productos y restas: 
-      es la medida del cambio de tamaño que sufre el espacio al transformarse.
-      Desde una perspectiva geométrica, el determinante representa el factor de escala de volumen de una
-      transformación lineal: \\
-      - En 2D (matrices de $2 \times 2$): El valor absoluto del determinante es el área del paralelogramo formado por los vectores columna (o fila) de la matriz.
-      - En 3D (matrices de $3 \times 3$): Es el volumen del paralelepípedo definido por sus tres vectores.
-      - En $n$ dimensiones: Representa el hipervolumen $n$-dimensional de la figura formada por dichos vectores.
-      ¿Qué nos dice el signo y el valor?
-      - $\vert{}\det(A)\vert{} > 1$: La transformación expande el área o volumen.
-      - $\vert{}\det(A)\vert{} < 1$: La transformación contrae el espacio.
-        $\det(A) = 0$: La transformación aplasta el espacio a una dimensión inferior (una línea o un punto en 2D, un plano o línea en 3D), haciendo perder información y volviendo a la matriz no invertible.
-        - El signo (+ o -): Indica si la orientación del espacio se conserva o se invierte (como mirarse en un espejo).</h2>
+ <section class="intro1">
+  <div class="section-label">01 · INTRODUCCIÓN</div>
+  
+  <p>
+    El determinante de una matriz es mucho más que una fórmula algebraica con productos y restas: 
+    <strong>es la medida del cambio de tamaño que sufre el espacio al transformarse.</strong>
+  </p>
+  
+  <p>
+    Desde una perspectiva geométrica, el determinante representa el factor de escala de volumen de una transformación lineal:
+  </p>
 
+  <ul>
+    <li><strong>En 2D (matrices de $2 \times 2$):</strong> El valor absoluto del determinante es el área del paralelogramo formado por los vectores columna (o fila) de la matriz.</li>
+    <li><strong>En 3D (matrices de $3 \times 3$):</strong> Es el volumen del paralelepípedo definido por sus tres vectores.</li>
+    <li><strong>En $n$ dimensiones:</strong> Representa el hipervolumen $n$-dimensional de la figura formada por dichos vectores.</li>
+  </ul>
+
+  <h3>¿Qué nos dice el signo y el valor?</h3>
+
+  <ul>
+    <li><strong>$\lvert\det(A)\rvert > 1$:</strong> La transformación expande el área o volumen.</li>
+    <li><strong>$\lvert\det(A)\rvert < 1$:</strong> La transformación contrae el espacio.</li>
+    <li><strong>$\det(A) = 0$:</strong> La transformación aplasta el espacio a una dimensión inferior (una línea o un punto en 2D, un plano o línea en 3D), haciendo perder información y volviendo a la matriz no invertible.</li>
+    <li><strong>El signo (+ o -):</strong> Indica si la orientación del espacio se conserva o se invierte (como mirarse en un espejo).</li>
+  </ul>
+</section>
 <main>
   <section class="intro">
     <div class="section-label">01 · IDEA GEOMÉTRICA</div>
