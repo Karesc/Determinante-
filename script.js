@@ -399,253 +399,183 @@ function vectors3D(A) {
    Dibujar paralelepípedo
    --------------------------------------------------------- */
 
-function draw3D(A) {
 
+function draw3D(A) {
   const vectors = vectors3D(A);
 
   const u = vectors.u;
   const v = vectors.v;
   const w = vectors.w;
 
+  const add = (...vectors) => [
+    vectors.reduce((s, p) => s + p[0], 0),
+    vectors.reduce((s, p) => s + p[1], 0),
+    vectors.reduce((s, p) => s + p[2], 0)
+  ];
+
   const O = [0, 0, 0];
-
   const U = u;
-
   const V = v;
-
   const W = w;
+  const UV = add(u, v);
+  const UW = add(u, w);
+  const VW = add(v, w);
+  const UVW = add(u, v, w);
 
-  const UV = [
-    u[0] + v[0],
-    u[1] + v[1],
-    u[2] + v[2]
-  ];
-
-  const UW = [
-    u[0] + w[0],
-    u[1] + w[1],
-    u[2] + w[2]
-  ];
-
-  const VW = [
-    v[0] + w[0],
-    v[1] + w[1],
-    v[2] + w[2]
-  ];
-
-  const UVW = [
-    u[0] + v[0] + w[0],
-    u[1] + v[1] + w[1],
-    u[2] + v[2] + w[2]
-  ];
-
-
-  /* -------------------------------------------------------
-     Vértices
-     ------------------------------------------------------- */
-
-  const vertices = [
-    O, U, V, W,
-    UV, UW, VW, UVW
-  ];
-
-
-  const x = vertices.map(p => p[0]);
-  const y = vertices.map(p => p[1]);
-  const z = vertices.map(p => p[2]);
-
-
-  /* -------------------------------------------------------
-     Caras trianguladas
-     ------------------------------------------------------- */
-
-  const i = [
-    0, 0,
-    0, 0,
-    1, 1,
-    2, 2,
-    3, 3,
-    4, 4
-  ];
-
-  const j = [
-    1, 2,
-    1, 3,
-    4, 5,
-    4, 6,
-    5, 6,
-    7, 7
-  ];
-
-  const k = [
-    4, 6,
-    5, 5,
-    7, 7,
-    7, 7,
-    7, 7,
-    6, 5
-  ];
-
-
-  /* -------------------------------------------------------
-     Paralelepípedo
-     ------------------------------------------------------- */
-
-  const box = {
-    type: "mesh3d",
-
-    x: x,
-    y: y,
-    z: z,
-
-    i: i,
-    j: j,
-    k: k,
-
-    opacity: 0.55,
-
-    flatshading: true,
-
-    hoverinfo: "skip"
+  // Paleta de colores
+  const colors = {
+    u: "#E76F51",
+    v: "#2878B5",
+    w: "#269B78",
+    face1: "rgba(231,111,81,0.28)",
+    face2: "rgba(40,120,181,0.28)",
+    face3: "rgba(38,155,120,0.28)",
+    opposite: "rgba(130,140,155,0.12)",
+    edge: "#657080"
   };
 
-
-  /* -------------------------------------------------------
-     Vectores
-     ------------------------------------------------------- */
-
-  const vectorX = [
-    O[0], U[0], null,
-    O[0], V[0], null,
-    O[0], W[0]
+  // Cada cara se define mediante cuatro vértices.
+  // Las caras se muestran como superficies independientes.
+  const faces = [
+    { points: [O, U, UV, V], color: colors.face1 },
+    { points: [O, U, UW, W], color: colors.face2 },
+    { points: [O, V, VW, W], color: colors.face3 },
+    { points: [U, UV, UVW, UW], color: colors.opposite },
+    { points: [V, UV, UVW, VW], color: colors.opposite },
+    { points: [W, UW, UVW, VW], color: colors.opposite }
   ];
 
-  const vectorY = [
-    O[1], U[1], null,
-    O[1], V[1], null,
-    O[1], W[1]
+  const faceTraces = faces.map(face => ({
+    type: "mesh3d",
+    x: face.points.map(p => p[0]),
+    y: face.points.map(p => p[1]),
+    z: face.points.map(p => p[2]),
+
+    // Dos triángulos forman cada paralelogramo
+    i: [0, 0],
+    j: [1, 2],
+    k: [2, 3],
+
+    color: face.color,
+    opacity: 1,
+    flatshading: false,
+    showscale: false,
+    hoverinfo: "skip",
+    showlegend: false
+  }));
+
+  // Aristas del paralelepípedo
+  const edges = [
+    [O, U], [O, V], [O, W],
+    [U, UV], [U, UW],
+    [V, UV], [V, VW],
+    [W, UW], [W, VW],
+    [UV, UVW], [UW, UVW], [VW, UVW]
   ];
 
-  const vectorZ = [
-    O[2], U[2], null,
-    O[2], V[2], null,
-    O[2], W[2]
-  ];
-
-
-  const vectorsPlot = {
-
+  const edgeTrace = {
     type: "scatter3d",
-
     mode: "lines",
-
-    x: vectorX,
-
-    y: vectorY,
-
-    z: vectorZ,
-
+    x: edges.flatMap(e => [e[0][0], e[1][0], null]),
+    y: edges.flatMap(e => [e[0][1], e[1][1], null]),
+    z: edges.flatMap(e => [e[0][2], e[1][2], null]),
     line: {
+      color: colors.edge,
+      width: 4
+    },
+    hoverinfo: "skip",
+    showlegend: false
+  };
+
+  // Vectores desde el origen, cada uno con su propio color
+  const vectorTraces = [
+    { p: U, label: "u", color: colors.u },
+    { p: V, label: "v", color: colors.v },
+    { p: W, label: "w", color: colors.w }
+  ].map(({ p, label, color }) => ({
+    type: "scatter3d",
+    mode: "lines",
+    x: [0, p[0]],
+    y: [0, p[1]],
+    z: [0, p[2]],
+    line: {
+      color,
       width: 8
     },
+    name: label,
+    hoverinfo: "skip",
+    showlegend: false
+  }));
 
-    hoverinfo: "skip"
-  };
-
-
-  /* -------------------------------------------------------
-     Extremos y etiquetas
-     ------------------------------------------------------- */
-
+  // Etiquetas de los vectores
   const labels = {
-
     type: "scatter3d",
-
     mode: "text",
-
-    x: [
-      U[0],
-      V[0],
-      W[0]
-    ],
-
-    y: [
-      U[1],
-      V[1],
-      W[1]
-    ],
-
-    z: [
-      U[2],
-      V[2],
-      W[2]
-    ],
-
-    text: [
-      "u",
-      "v",
-      "w"
-    ],
-
+    x: [U[0], V[0], W[0]],
+    y: [U[1], V[1], W[1]],
+    z: [U[2], V[2], W[2]],
+    text: ["u", "v", "w"],
+    textposition: "top center",
     textfont: {
-      size: 18
+      size: 18,
+      color: [colors.u, colors.v, colors.w],
+      family: "Arial, sans-serif"
     },
-
-    hoverinfo: "skip"
+    hoverinfo: "skip",
+    showlegend: false
   };
-
-
-  /* -------------------------------------------------------
-     Configuración
-     ------------------------------------------------------- */
 
   const layout = {
-
-    margin: {
-      l: 0,
-      r: 0,
-      b: 0,
-      t: 20
-    },
+    margin: { l: 0, r: 0, b: 0, t: 15 },
+    paper_bgcolor: "#FAFAF7",
+    plot_bgcolor: "#FAFAF7",
 
     scene: {
+      bgcolor: "#FAFAF7",
 
       xaxis: {
         title: "x",
-        range: [-4, 4]
+        range: [-4, 4],
+        gridcolor: "#E4E7EB",
+        zerolinecolor: "#AAB2BD",
+        showbackground: true,
+        backgroundcolor: "#F5F6F4"
       },
 
       yaxis: {
         title: "y",
-        range: [-4, 4]
+        range: [-4, 4],
+        gridcolor: "#E4E7EB",
+        zerolinecolor: "#AAB2BD",
+        showbackground: true,
+        backgroundcolor: "#F5F6F4"
       },
 
       zaxis: {
         title: "z",
-        range: [-4, 4]
+        range: [-4, 4],
+        gridcolor: "#E4E7EB",
+        zerolinecolor: "#AAB2BD",
+        showbackground: true,
+        backgroundcolor: "#F5F6F4"
       },
 
       aspectmode: "cube",
 
       camera: {
-        eye: {
-          x: 1.5,
-          y: 1.5,
-          z: 1.3
-        }
+        eye: { x: 1.6, y: 1.7, z: 1.4 }
       }
-
     },
 
     showlegend: false
   };
 
-
   Plotly.react(
     "plot3d",
     [
-      box,
-      vectorsPlot,
+      ...faceTraces,
+      edgeTrace,
+      ...vectorTraces,
       labels
     ],
     layout,
@@ -654,7 +584,6 @@ function draw3D(A) {
       displaylogo: false
     }
   );
-
 }
 
 
