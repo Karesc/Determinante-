@@ -286,9 +286,9 @@
 
       <div class="formula">
         \[
-        \vec u=(a,d,g),\qquad
-        \vec v=(b,e,h),\qquad
-        \vec w=(c,f,i).
+        \vec u=(a,d,g)^t,\qquad
+        \vec v=(b,e,h)^t,\qquad
+        \vec w=(c,f,i)^t.
         \]
       </div>
 
@@ -379,23 +379,31 @@
       </button>
 
       <div class="result-card">
+         <div class="result-card">
+          <div class="matrix">
+            <p>det(A) =</p>
+            <table>
+              <tr>
+                <td id="a3m">3</td>
+                <td id="b3m">1</td>
+                <td id="c3m">1</td>
+              </tr>
+              <tr>
+                <td id="d3m">1</td>
+                <td id="e3m">3</td>
+                <td id="f3m">1</td>
+              </tr>
+              <tr>
+                <td id="g3m">1</td>
+                <td id="h3m">3</td>
+                <td id="13m">1</td>
+              </tr>
+            </table>
+          </div>
 
-        <div class="matrix">
-          \[
-          A=
-          \begin{pmatrix}
-          <span id="a3m">1</span>&<span id="b3m">0</span>&<span id="c3m">0</span>\\
-          <span id="d3m">0</span>&<span id="e3m">1</span>&<span id="f3m">0</span>\\
-          <span id="g3m">0</span>&<span id="h3m">0</span>&<span id="i3m">1</span>
-          \end{pmatrix}
-          \]
-        </div>
 
         <div class="calculation">
-          \[
-          \det(A)=
-          <strong id="det3Value">1</strong>
-          \]
+          = <strong id="det3Value">1</strong>
         </div>
 
         <div class="area-result">
