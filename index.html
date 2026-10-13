@@ -254,55 +254,54 @@
 </main>
 
 <section id="volumen3d" class="volume-section">
-  <div class="section-label">03 · DETERMINANTE 3×3</div>
+  <div class="section-label">05 · DETERMINANTE 3×3</div>
 
-  <h2>Del área al volumen</h2>
+  <h2>Del área al volumen: Interpretación geométrica en 3D</h2>
 
-  <p class="section-description">
-    En tres dimensiones, tres vectores generan un paralelepípedo.
-    Su volumen está determinado por el valor absoluto del determinante.
-  </p>
+<p class="section-description">
+  Así como en dos dimensiones el determinante mide el área de un paralelogramo, en tres dimensiones tres vectores generadores construyen un paralelepípedo. El volumen de este cuerpo geométrico equivale exactamente al valor absoluto del determinante de la matriz formada por dichos vectores.
+</p>
 
-  <div class="volume-intro">
-    <div>
-      <p>
-        Consideremos la matriz
-      </p>
+<div class="volume-intro">
+  <div>
+    <p>
+      Dada la matriz de orden \(3 \times 3\):
+    </p>
 
-      <div class="formula">
-        \[
-        A=
-        \begin{pmatrix}
-        a&b&c\\
-        d&e&f\\
-        g&h&i
-        \end{pmatrix}
-        \]
-      </div>
+    <div class="formula">
+      \[
+      B =
+      \begin{pmatrix}
+      a & b & c \\
+      d & e & f \\
+      g & h & i
+      \end{pmatrix}
+      \]
+    </div>
 
-      <p>
-        Sus columnas pueden interpretarse como tres vectores:
-      </p>
+    <p>
+      Podemos interpretar sus columnas como los vectores directores en \(\mathbb{R}^3\):
+    </p>
 
-      <div class="formula">
-        \[
-        \vec u=(a,d,g)^t,\qquad
-        \vec v=(b,e,h)^t,\qquad
-        \vec w=(c,f,i)^t.
-        \]
-      </div>
+    <div class="formula">
+      \[
+      \vec{u} = \begin{pmatrix} a \\ d \\ g \end{pmatrix}, \qquad
+      \vec{v} = \begin{pmatrix} b \\ e \\ h \end{pmatrix}, \qquad
+      \vec{w} = \begin{pmatrix} c \\ f \\ i \end{pmatrix}
+      \]
+    </div>
 
-      <p>
-        Estos tres vectores forman un paralelepípedo cuyo volumen es
-      </p>
+    <p>
+      El volumen \(V\) del paralelepípedo sustentado por \(\vec{u}\), \(\vec{v}\) y \(\vec{w}\) está determinado por el valor absoluto de su producto mixto (o determinante de la matriz \(B\)):
+    </p>
 
-      <div class="formula big highlight">
-        \[
-        \boxed{V=|\det(A)|}
-        \]
-      </div>
+    <div class="formula big highlight">
+      \[
+      \boxed{V = |\det(B)|}
+      \]
     </div>
   </div>
+</div>
 
   <div class="volume-layout">
 
@@ -381,7 +380,7 @@
       <div class="result-card">
          <div class="result-card">
           <div class="matrix">
-            <p>det(A) =</p>
+            <p>det(B) =</p>
             <table>
               <tr>
                 <td id="a3m">3</td>
@@ -396,7 +395,7 @@
               <tr>
                 <td id="g3m">1</td>
                 <td id="h3m">3</td>
-                <td id="13m">1</td>
+                <td id="i3m">1</td>
               </tr>
             </table>
           </div>
@@ -430,6 +429,35 @@
 
 </section>
 
+
+<section id="volumennd" class="volume-nsection">
+  <div class="extension-dimension">
+  <h3>Generalización: Determinantes y hipervolúmenes en $n$ dimensiones</h3>
+
+  <p>
+    El concepto de medida geométrica a través del determinante se extiende de manera natural a cualquier dimensión $n \in \mathbb{N}$:
+  </p>
+
+  <ul>
+    <li><b>En $\mathbb{R}^1$:</b> El valor absoluto $ |a| $ representa la <i>longitud</i> de un segmento.</li>
+    <li><b>En $\mathbb{R}^2$:</b> El valor absoluto $|\det(A)|$ representa el <i>área</i> de un paralelogramo.</li>
+    <li><b>En $\mathbb{R}^3$:</b> El valor absoluto $|\det(B)|$ representa el <i>volumen</i> de un paralelepípedo.</li>
+    <li><b>En $\mathbb{R}^n$:</b> El valor absoluto $|\det(M)|$ representa el <b>hipervolumen $n$-dimensional</b> del hiperparalelepípedo generado por las $n$ columnas de la matriz $M$.</li>
+  </ul>
+
+  <p>
+    Esta propiedad geométrica fundamental nos permite interpretar el signo del determinante:
+  </p>
+
+  <ul>
+    <li><b>Si $\det(M) \neq 0$:</b> Los $n$ vectores son linealmente independientes y generan una figura no colapsada con un hipervolumen positivo. Su signo indica la <i>orientación</i> de la base en el espacio.</li>
+    <li><b>Si $\det(M) = 0$:</b> Los vectores son linealmente dependientes. La transformación colapsa el espacio a una dimensión inferior (como aplanar un volumen 3D en un plano 2D), resultando en un hipervolumen exactamente igual a cero.</li>
+  </ul>
+</div>
+
+
+</section>
+  
 <footer>
   <p>Álgebra Lineal · Visualización interactiva</p>
   <p>Construida con HTML, CSS, JavaScript y MathJax.</p>
