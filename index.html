@@ -158,37 +158,34 @@
         <button id="reset" class="reset-button">Restablecer</button>
 
         <div class="result-card">
-          <div class="matrix">
-            \[
-            A = \begin{pmatrix}
-            \htmlId{ma}{3} & \htmlId{mb}{1} \\
-            \htmlId{mc}{1} & \htmlId{md}{3}
-            \end{pmatrix}
-            \]
-          </div>
-          
-          <div class="calculation">
-            \[
-            \det(A) = (\htmlId{ca}{3})(\htmlId{cd}{3}) - (\htmlId{cb}{1})(\htmlId{cc}{1}) = \htmlId{detValue}{8}
-            \]
-          </div>
+  <!-- Matriz A -->
+  <div class="matrix">
+    \[
+    A = \begin{pmatrix}
+    \htmlId{ma}{3} & \htmlId{mb}{1} \\
+    \htmlId{mc}{1} & \htmlId{md}{3}
+    \end{pmatrix}
+    \]
+  </div>
+ 
+  <!-- Cálculo del Determinante (Fórmula ad - bc corregida) -->
+  <div class="calculation">
+    \[
+    \det(A) = (\htmlId{ca}{3})(\htmlId{cd}{3}) - (\htmlId{cb}{1})(\htmlId{cc}{1}) = \htmlId{detValue}{8}
+    \]
+  </div>
 
-          <div class="area-result">
-            <span>Área del paralelogramo</span>
-            <strong id="areaValue">8</strong>
-          </div>
+  <!-- Resultado del Área -->
+  <div class="area-result">
+    <span>Área del paralelogramo:</span>
+    <strong id="areaValue">8</strong>
+  </div>
 
-          <div id="orientation" class="orientation positive">
-            Orientación positiva
-          </div>
-        </div>
-      </div>
-
-      <div class="canvas-card">
-        <canvas id="canvas" width="700" height="600"></canvas>
-      </div>
-    </div>
-  </section>
+  <!-- Estado de Orientación -->
+  <div id="orientation" class="orientation positive">
+    Orientación positiva
+  </div>
+</div>
 
   <section class="explanation">
     <div class="section-label">03 · ¿POR QUÉ FUNCIONA?</div>
