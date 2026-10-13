@@ -1,40 +1,12 @@
-# El determinante como área
+# El determinante 
 
-Página educativa interactiva para GitHub Pages.
-
-## Archivos
-
-- `index.html`: contenido de la página.
-- `style.css`: diseño visual.
-- `script.js`: animación y sliders.
-- `generar_pagina.py`: script de Python asociado al proyecto.
-- `assets/`: carpeta para imágenes, GIFs, etc.
-
-## Publicarla en GitHub Pages
-
-1. Crea un repositorio en GitHub.
-2. Sube todos estos archivos.
-3. Ve a:
-
-   Settings → Pages
-
-4. En "Build and deployment", selecciona:
-
-   Deploy from a branch
-
-5. Selecciona la rama `main` y la carpeta `/ (root)`.
-6. Guarda.
-
-GitHub generará una dirección similar a:
-
-https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/
-
-## Importante
-
-GitHub Pages sirve archivos estáticos. Por eso:
-
-- Python puede utilizarse para GENERAR la página.
-- JavaScript controla los sliders y la animación en el navegador.
-- No se necesita Flask, Django ni otro servidor.
-
-La página usa MathJax desde CDN para renderizar las ecuaciones.
+El determinante de una matriz es mucho más que una fórmula algebraica con productos y restas: es la medida del cambio de tamaño que sufre el espacio al transformarse.Desde una perspectiva geométrica, el determinante representa el factor de escala de volumen de una transformación lineal:
+* En 2D (matrices de $2 \times 2$): El valor absoluto del determinante es el área del paralelogramo formado por los vectores columna (o fila) de la matriz.
+* En 3D (matrices de $3 \times 3$): Es el volumen del paralelepípedo definido por sus tres vectores.
+* En $n$ dimensiones: Representa el hipervolumen $n$-dimensional de la figura formada por dichos vectores.
+*
+¿Qué nos dice el signo y el valor?
+* $\vert{}\det(A)\vert{} > 1$: La transformación expande el área o volumen.
+* $\vert{}\det(A)\vert{} < 1$: La transformación contrae el espacio.
+* $\det(A) = 0$: La transformación aplasta el espacio a una dimensión inferior (una línea o un punto en 2D, un plano o línea en 3D), haciendo perder información y volviendo a la matriz no invertible.
+* El signo (+ o -): Indica si la orientación del espacio se conserva o se invierte (como mirarse en un espejo).
