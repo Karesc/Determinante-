@@ -60,75 +60,63 @@
 </section>
 <main>
   <section class="intro">
-    <div class="section-label">01 · IDEA GEOMÉTRICA</div>
-    <h2>¿Qué mide un determinante?</h2>
+  <header>
+    <div class="section-label">02 · IDEA GEOMÉTRICA</div>
+    <h2>¿Qué mide realmente un determinante?</h2>
+  </header>
 
-    <div class="two-columns">
-      <div>
-        <p>
-          Consideremos dos vectores del plano:
-        </p>
+  <div class="two-columns">
+    <!-- Columna Principal: Desarrollo Matemático -->
+    <div class="main-explanation">
+      <p>
+        Consideremos dos vectores en el plano $\mathbb{R}^2$ definidos por sus componentes:
+      </p>
 
-        <div class="formula">
-          \[
-          \vec u=(a,c), \qquad \vec v=(b,d)
-          \]
-        </div>
-
-        <p>
-          Estos dos vectores pueden formar un paralelogramo. Su área está
-          relacionada directamente con el determinante de la matriz
-        </p>
-
-        <div class="formula">
-          \[
-          A=
-          \begin{pmatrix}
-          a & b\\
-          c & d
-          \end{pmatrix}.
-          \]
-        </div>
-
-        <p>
-          El determinante es
-        </p>
-
-        <div class="formula highlight">
-          \[
-          \det(A)=ad-bc.
-          \]
-        </div>
-
-        <p>
-          Y, geométricamente,
-        </p>
-
-        <div class="formula big">
-          \[
-          \boxed{\text{Área}=|\det(A)|}
-          \]
-        </div>
+      <div class="formula">
+        \[
+        \vec{u} = \begin{pmatrix} a \\ c \end{pmatrix}, \qquad \vec{v} = \begin{pmatrix} b \\ d \end{pmatrix}
+        \]
       </div>
 
-      <div class="concept-card">
-        <h3>La idea visual</h3>
-        <p>
-          Partimos de los vectores \(\vec u\) y \(\vec v\). Al mover sus
-          extremos, cambia el paralelogramo y cambia su área.
-        </p>
-        <p>
-          Los sliders de abajo permiten observar esta relación en tiempo real.
-        </p>
+      <p>
+        Al colocar estos vectores columna como las filas o columnas de una matriz $A$, obtenemos:
+      </p>
 
-        <div class="mini-equation">
-          \[
-          |\det(A)|=|\vec u_x\vec v_y-\vec v_x\vec u_y|
-          \]
-        </div>
+      <div class="formula">
+        \[
+        A = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \implies \det(A) = ad - bc
+        \]
+      </div>
+
+      <p>
+        Geométricamente, estos dos vectores definen los lados adyacentes de un paralelogramo. La propiedad fundamental del determinante es que su <strong>valor absoluto coincide exactamente con el área</strong> de dicha figura:
+      </p>
+
+      <div class="formula highlight big">
+        \[
+        \boxed{\text{Área} = |\det(A)| = |ad - bc|}
+        \]
       </div>
     </div>
-  </section>
+
+    <!-- Columna Secundaria: Tarjeta de Apoyo Interactivo -->
+    <aside class="concept-card">
+      <h3>Interacción en tiempo real</h3>
+      <p>
+        Al desplazar los vectores $\vec{u}$ y $\vec{v}$, la forma del paralelogramo se deforma y su superficie cambia proporcionalmente.
+      </p>
+      <p>
+        Utiliza los controles deslizantes a continuación para observar cómo varía el área en función de sus componentes:
+      </p>
+
+      <div class="mini-equation">
+        \[
+        \text{Área} = |u_x v_y - u_y v_x|
+        \]
+      </div>
+    </aside>
+  </div>
+</section>
 
   <section id="explorador" class="explorer">
     <div class="section-label">02 · EXPLORADOR INTERACTIVO</div>
