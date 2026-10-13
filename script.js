@@ -629,6 +629,39 @@ function update3D() {
 }
 
 
+function actualizarTarjeta(a, b, c, d) {
+  // 1. Cálculo del determinante y área
+  const det = (a * d) - (b * c);
+  const area = Math.abs(det);
+
+  // 2. Actualizar valores en el DOM
+  document.getElementById('ma').innerText = a;
+  document.getElementById('mb').innerText = b;
+  document.getElementById('mc').innerText = c;
+  document.getElementById('md').innerText = d;
+
+  document.getElementById('ca').innerText = a;
+  document.getElementById('cd').innerText = d;
+  document.getElementById('cb').innerText = b;
+  document.getElementById('cc').innerText = c;
+
+  document.getElementById('detValue').innerText = det;
+  document.getElementById('areaValue').innerText = area;
+
+  // 3. Actualizar estado y clase CSS de orientación
+  const orientationEl = document.getElementById('orientation');
+  
+  if (det > 0) {
+    orientationEl.innerText = "Orientación positiva (Antihorario)";
+    orientationEl.className = "orientation positive";
+  } else if (det < 0) {
+    orientationEl.innerText = "Orientación negativa (Horario)";
+    orientationEl.className = "orientation negative";
+  } else {
+    orientationEl.innerText = "Degenerado (Área = 0 / Vectores colineales)";
+    orientationEl.className = "orientation zero";
+  }
+}
 /* ---------------------------------------------------------
    Sliders
    --------------------------------------------------------- */
@@ -667,6 +700,7 @@ document.getElementById("reset3D").addEventListener(
 
   }
 );
+
 
 
 /* ---------------------------------------------------------
